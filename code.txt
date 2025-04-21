@@ -1,0 +1,101 @@
+#define load1  A0
+#define load2  A1
+#define load3  A3
+#define load4  A4
+#define load5  A5
+
+int temp1 = 0;
+int temp2 = 0;
+int temp3 = 0;
+int temp4 = 0;
+
+String readString;
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(load1, OUTPUT); // FAN
+  pinMode(load2, OUTPUT); // LIGHT
+  pinMode(load3, OUTPUT); // TV
+  pinMode(load4, OUTPUT); // Extra
+  pinMode(load5, OUTPUT); // Buzzer
+
+  digitalWrite(load1, HIGH);
+  digitalWrite(load2, HIGH);
+  digitalWrite(load3, HIGH);
+  digitalWrite(load4, HIGH);
+  digitalWrite(load5, HIGH);
+  
+  delay(1000);
+
+  digitalWrite(load1, LOW);
+  digitalWrite(load2, LOW);
+  digitalWrite(load3, LOW);
+  digitalWrite(load4, LOW);
+  digitalWrite(load5, LOW);
+}
+
+void loop() {
+  while (Serial.available()) {
+    Serial.println(readString);
+    delay(3);
+    char c = Serial.read();
+    readString += c;
+  }
+
+  if (readString.length() > 0) {
+    Serial.println(readString);
+
+    if ((readString == "1") && (temp1 == 0)) { 
+      temp1 = 1;   
+      digitalWrite(load1, HIGH);
+      Serial.println("FAN ON");
+      delay(5000);
+    } 
+    else if ((readString == "1") && (temp1 == 1)) { 
+      temp1 = 0;   
+      digitalWrite(load1, LOW);
+      Serial.println("FAN OFF");
+      delay(5000);
+    }
+
+    else if ((readString == "2") && (temp2 == 0)) {  
+      temp2 = 1; 
+      digitalWrite(load2, HIGH);
+      Serial.println("LIGHT 1 ON");
+      delay(5000);
+    } 
+    else if ((readString == "2") && (temp2 == 1)) {  
+      temp2 = 0; 
+      digitalWrite(load2, LOW);
+      Serial.println("LIGHT 1 OFF");
+      delay(5000);
+    }
+
+    else if ((readString == "3") && (temp3 == 0)) {  
+      temp3 = 1; 
+      digitalWrite(load3, HIGH);
+      Serial.println("LIGHT 3 ON");
+      delay(5000);
+    } 
+    else if ((readString == "3") && (temp3 == 1)) {  
+      temp3 = 0; 
+      digitalWrite(load3, LOW);
+      Serial.println("LIGHT 3 OFF");
+      delay(5000);
+    }
+
+    else if ((readString == "4") && (temp4 == 0)) {  
+      temp4 = 1; 
+      digitalWrite(load4, HIGH);
+      Serial.println("LIGHT 4 ON");
+      delay(5000);
+    } 
+    else if ((readString == "4") && (temp4 == 1)) {  
+      temp4 = 0; 
+      digitalWrite(load4, LOW);
+      Serial.println("LIGHT 4 OFF");
+      delay(5000);
+    }
+  }
+  readString = "";
+}
