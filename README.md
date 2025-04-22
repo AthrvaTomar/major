@@ -44,31 +44,51 @@ The system consists of three main components:
 2. Upload the Arduino code (`arduino_code.ino`) to your Arduino board using the Arduino IDE
 
 ### Software Requirements
-- Python 3.7+
-- Required Python packages:
-  - streamlit
-  - opencv-python
-  - mediapipe
-  - pyserial
-  - SpeechRecognition
-  - numpy
-  - pillow
+- Python 3.7+ (Python 3.8 recommended)
+- Dependencies listed in requirements.txt
 
 ### Software Installation
-1. Clone this repository or download the source files
 
-2. Install required Python packages:
+#### Setting Up a Virtual Environment
+
+1. **Create a virtual environment**
+
+Using venv (Python's built-in virtual environment):
 ```bash
-pip install streamlit opencv-python mediapipe pyserial SpeechRecognition numpy pillow
+# Windows
+python -m venv venv
+venv\Scripts\activate
+
+# macOS/Linux
+python3 -m venv venv
+source venv/bin/activate
 ```
 
-3. Connect your Arduino to the computer via USB cable
+2. **Install dependencies**
+```bash
+pip install -r requirements.txt
+```
+
+### Requirements.txt File
+
+Create a file named `requirements.txt` with the following contents:
+
+```
+streamlit>=1.22.0
+opencv-python==4.5.5.64
+mediapipe==0.8.9.1
+pyserial>=3.5
+SpeechRecognition>=3.8.1
+numpy>=1.20.0
+pillow>=8.0.0
+```
 
 ### Running the Application
-1. Open a terminal/command prompt in the project directory
+1. Connect your Arduino to the computer via USB cable
 
 2. Launch the Streamlit application:
 ```bash
+# Activate your virtual environment first
 streamlit run home_automation_portal.py
 ```
 
@@ -105,35 +125,6 @@ The "Voice Control" tab enables voice command recognition:
 3. The status indicator will show recognized commands
 4. Click "Stop Voice Control" when done
 
-## Troubleshooting
-
-### Arduino Connection Issues
-- Verify the correct COM port is selected
-- Check that no other application is using the same COM port
-- Try disconnecting and reconnecting the Arduino
-- Ensure the correct Arduino code is uploaded
-
-### Gesture Recognition Issues
-- Ensure good lighting conditions
-- Position your hand clearly in the camera frame
-- Make gestures clear and distinct
-- Keep your hand at a moderate distance from the camera
-
-### Voice Recognition Issues
-- Speak clearly and at a moderate pace
-- Reduce background noise
-- Check that your microphone is properly connected and detected
-- Try using exact phrase patterns as mentioned in the guide
-
-## File Structure
-```
-smart-home-control/
-├── arduino_code.ino          # Arduino control code
-├── home_automation_portal.py # Main Streamlit application
-├── README.md                 # Project documentation
-└── requirements.txt          # Python dependencies
-```
-
 ## Technical Details
 
 ### Device Mapping
@@ -149,7 +140,7 @@ The system uses a simple serial communication protocol between the Python applic
 - Each command toggles the device state (ON/OFF)
 
 ### Hand Gesture Recognition
-The system uses MediaPipe Hands to detect hand landmarks and implements a finger counting algorithm based on the position of fingertips relative to knuckles.
+The system uses MediaPipe Hands for accurate hand landmark detection and finger counting.
 
 ### Voice Recognition
 Speech recognition is implemented using Google's speech-to-text API through the SpeechRecognition Python library.
@@ -169,6 +160,3 @@ This project utilizes the following open-source libraries:
 - [MediaPipe](https://mediapipe.dev/) for hand gesture recognition
 - [OpenCV](https://opencv.org/) for computer vision processing
 - [SpeechRecognition](https://github.com/Uberi/speech_recognition) for voice command processing
-
-## License
-This project is licensed under the MIT License - see the LICENSE file for details.
